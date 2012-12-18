@@ -7,8 +7,41 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_centerHorizontal="false"
         android:layout_centerVertical="true"
         android:text="@string/hello_world" />
+    
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:paddingLeft="16dp"
+	    android:paddingRight="16dp"
+	    android:orientation="horizontal">
+	    <Button
+	        android:id="@+id/close_App_Button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/close_App_Button"
+	        android:onClick="closeApp" />
+	    
+	    <Button
+	        android:id="@+id/activate_BT_Button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/activate_BT_Button"
+	        android:onClick="activateBT" />
+	    
+	    <Button
+	        android:id="@+id/discover_BT_Button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/discover_BT_Button"
+	        android:onClick="discoverBT" />
+	</LinearLayout>
+	
+	<fragment android:name="com.example.smartHome.AlarmClockFragment"
+	    android:id="@+id/alarmClock"
+	    android:layout_width="0dp"
+	    android:layout_height="match_parent" />	    
 
 </RelativeLayout>

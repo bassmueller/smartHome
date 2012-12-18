@@ -4,5 +4,8 @@
     <string name="app_name">SmartHome</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="close_App_Button">Close</string>
+    <string name="activate_BT_Button">Activate BT</string>
+    <string name="discover_BT_Button">Look for other BT devices</string>
 
 </resources>
