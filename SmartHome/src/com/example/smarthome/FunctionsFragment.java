@@ -1,5 +1,6 @@
 package com.example.smarthome;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
@@ -18,7 +19,7 @@ public class FunctionsFragment extends ListFragment{
 
         // Populate list with our static array of titles.
         setListAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_activated_1, Shakespeare.TITLES));
+                android.R.layout.simple_list_item_activated_1, FunctionsList.FUNCTIONS));
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
@@ -63,20 +64,16 @@ public class FunctionsFragment extends ListFragment{
             getListView().setItemChecked(index, true);
 
             // Check what fragment is currently shown, replace if needed.
-            DetailsFragment details = (DetailsFragment)
-                    getFragmentManager().findFragmentById(R.id.details);
-            if (details == null || details.getShownIndex() != index) {
+            Fragment details = (Fragment)
+                    getFragmentManager().findFragmentById(R.id.alarmClock_layout);
+            if (details == null) {
                 // Make new fragment to show this selection.
-                details = DetailsFragment.newInstance(index);
+                details = new AlarmClockFragment();
 
                 // Execute a transaction, replacing any existing fragment
                 // with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                if (index == 0) {
-                    ft.replace(R.id.details, details);
-                } else {
-                    //ft.replace(R.id.a_item, details);
-                }
+                ft.replace(R.id.details, details);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
             }

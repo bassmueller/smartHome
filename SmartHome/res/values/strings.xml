@@ -7,5 +7,7 @@
     <string name="close_App_Button">Close</string>
     <string name="activate_BT_Button">Activate BT</string>
     <string name="discover_BT_Button">Look for other BT devices</string>
+    <string name="alarmClockDefaultDescription">Description</string>
+    <string name="alarmClockSave">Save</string>
 
 </resources>
