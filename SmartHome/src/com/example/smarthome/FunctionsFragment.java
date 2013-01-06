@@ -56,19 +56,32 @@ public class FunctionsFragment extends ListFragment{
      * whole new activity in which it is displayed.
      */
     void showDetails(int index) {
-        mCurCheckPosition = index;
-
-        if (mDualPane) {
+    	if (mDualPane) {
             // We can display everything in-place with fragments, so update
             // the list to highlight the selected item and show the data.
             getListView().setItemChecked(index, true);
 
             // Check what fragment is currently shown, replace if needed.
-            Fragment details = (Fragment)
-                    getFragmentManager().findFragmentById(R.id.alarmClock_layout);
-            if (details == null) {
-                // Make new fragment to show this selection.
-                details = new AlarmClockFragment();
+            if (mCurCheckPosition != index || mCurCheckPosition == 0) {
+            	
+            	Fragment details = null;
+                switch(index){
+                	case 0: details = (Fragment) getFragmentManager().findFragmentById(R.id.alarmClock_layout);
+                			if(details == null){
+                				details = new AlarmClockFragment();
+                			}
+                			break;
+                	case 1: details = (Fragment) getFragmentManager().findFragmentById(R.id.alarmList_layout);
+		                	if(details == null){
+		        				details = new AlarmListFragment();
+		        			}
+        					break;
+        			default: details = (Fragment) getFragmentManager().findFragmentById(R.id.alarmClock_layout);
+		        			if(details == null){
+		        				details = new AlarmClockFragment();
+		        			}
+        					break;
+                }
 
                 // Execute a transaction, replacing any existing fragment
                 // with this one inside the frame.
@@ -86,6 +99,7 @@ public class FunctionsFragment extends ListFragment{
             intent.putExtra("index", index);
             startActivity(intent);
         }
+    	 mCurCheckPosition = index;
     }
 
 }
