@@ -1,24 +1,36 @@
 package com.example.smarthome;
 
-import android.app.Fragment;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class AlarmListFragment extends Fragment{
+public class AlarmListFragment extends ListFragment{
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+		        "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+		        "Linux", "OS/2", "Android", "iPhone", "WindowsMobile",
+		        "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+		        "Linux", "OS/2" };
+		setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values));
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		return inflater.inflate(R.layout.alarmclock_layout, container, false);
+		return inflater.inflate(R.layout.alarmlist_layout, container, false);
+	}
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		// Do something with the data
+		
 	}
 
 	@Override
