@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Collections;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -62,6 +63,7 @@ public class AlarmClockFragment extends Fragment{
 					currentSelection.setDate(date.getDayOfMonth() + "." + date.getMonth()+1 + "." + date.getYear());
 					
 					timeList.addAlarmTime(currentSelection);
+					Collections.sort(timeList.getAlarmTimeList(), new AlarmTimeComparator());
 					
 					FileOutputStream fos;
 					ObjectOutputStream os;
