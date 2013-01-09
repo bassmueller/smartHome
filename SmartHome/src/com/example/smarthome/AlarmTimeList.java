@@ -1,22 +1,28 @@
 package com.example.smarthome;
 
-import java.util.LinkedList;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class AlarmTimeList {
+public class AlarmTimeList implements Serializable {
 	
-	private List<AlarmTimes> alarmTimes;
+	private static final long serialVersionUID = 2533088355622978100L;
+	private List<AlarmTime> alarmTimes;
 	
 	public AlarmTimeList(){
-		this.setAlarmTimeList(new LinkedList<AlarmTimes>());
+		this.alarmTimes = new ArrayList<AlarmTime>();
 	}
 
-	public List<AlarmTimes> getAlarmTimeList() {
+	public List<AlarmTime> getAlarmTimeList() {
 		return this.alarmTimes;
 	}
 
-	public void setAlarmTimeList(List<AlarmTimes> alarmTimes) {
-		this.alarmTimes = alarmTimes;
+	public void addAlarmTime(AlarmTime alarmTime) {
+		this.alarmTimes.add(alarmTime);
+	}
+	
+	public AlarmTime removeAlarmTime(int location) {
+		return this.alarmTimes.remove(location);
 	}
 
 }
