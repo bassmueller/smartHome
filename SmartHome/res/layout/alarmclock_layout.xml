@@ -50,12 +50,20 @@
 		        android:layout_below="@id/alarmTimePicker"
 		        android:layout_marginTop="30dp"
 		        android:layout_centerHorizontal="true" />
+		    
+		    <Spinner
+			    android:id="@+id/sceneSpinner"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_below="@id/alarmDatePicker"
+			    android:layout_marginTop="30dp"
+		        android:layout_centerHorizontal="true" />
 		
 		    <Button
 		        android:id="@+id/alarmButtonSave"
 		        android:layout_width="96dp"
 		        android:layout_height="wrap_content"
-		        android:layout_below="@id/alarmDatePicker"
+		        android:layout_below="@id/sceneSpinner"
 		        android:layout_marginTop="30dp"
 		        android:text="@string/alarmSave"/>
 		

@@ -14,9 +14,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -83,6 +85,18 @@ public class AlarmClockFragment extends Fragment{
 				}
 			}
 		});
+		
+		MainActivity activity = (MainActivity)getActivity();
+		SceneList sceneList = activity.<SceneList>readFile("Scenes");
+		
+		Spinner spinner = (Spinner) getActivity().findViewById(R.id.sceneSpinner);
+		
+		if(sceneList != null){
+			Scene[]scenes = (Scene[]) sceneList.getScenes().toArray(new Scene[sceneList.getScenes().size()]);
+			ArrayAdapter<Scene> adapter = new ArrayAdapter<Scene>(getActivity(), android.R.layout.simple_list_item_1, scenes);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinner.setAdapter(adapter);
+		}
 	}
 
 	@Override

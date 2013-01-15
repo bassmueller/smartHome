@@ -20,26 +20,27 @@ public final class R {
     public static final class id {
         public static final int activate_BT_Button=0x7f080001;
         public static final int alarmAnalogClock=0x7f080007;
-        public static final int alarmButtonSave=0x7f08000b;
+        public static final int alarmButtonSave=0x7f08000c;
         public static final int alarmClock=0x7f080003;
         public static final int alarmClock_layout=0x7f080004;
         public static final int alarmClock_subLayout=0x7f080006;
         public static final int alarmDatePicker=0x7f08000a;
         public static final int alarmDescription=0x7f080008;
-        public static final int alarmList_layout=0x7f08000c;
+        public static final int alarmList_layout=0x7f08000d;
         public static final int alarmScrollView=0x7f080005;
         public static final int alarmTimePicker=0x7f080009;
-        public static final int audio=0x7f080010;
+        public static final int audio=0x7f080011;
         public static final int close_App_Button=0x7f080000;
-        public static final int definescene_layout=0x7f08000d;
-        public static final int descriptionScene=0x7f08000e;
-        public static final int details=0x7f080014;
+        public static final int definescene_layout=0x7f08000e;
+        public static final int descriptionScene=0x7f08000f;
+        public static final int details=0x7f080015;
         public static final int discover_BT_Button=0x7f080002;
-        public static final int functionList=0x7f080013;
-        public static final int lightShow=0x7f08000f;
-        public static final int menu_settings=0x7f080015;
-        public static final int sceneButtonSave=0x7f080011;
-        public static final int sceneList_layout=0x7f080012;
+        public static final int functionList=0x7f080014;
+        public static final int lightShow=0x7f080010;
+        public static final int menu_settings=0x7f080016;
+        public static final int sceneButtonSave=0x7f080012;
+        public static final int sceneList_layout=0x7f080013;
+        public static final int sceneSpinner=0x7f08000b;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

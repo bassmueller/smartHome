@@ -33,9 +33,8 @@ public class AlarmListFragment extends ListFragment{
 			toastMessage("Unknown error!");
 			e.printStackTrace();
 		}
-		
-		AlarmTime[]times = (AlarmTime[]) timeList.getAlarmTimeList().toArray(new AlarmTime[timeList.getAlarmTimeList().size()]);
-		if(times != null){
+		if(timeList != null){
+			AlarmTime[]times = (AlarmTime[]) timeList.getAlarmTimeList().toArray(new AlarmTime[timeList.getAlarmTimeList().size()]);
 			setListAdapter(new ArrayAdapter<AlarmTime>(getActivity(), android.R.layout.simple_list_item_1, times));
 		}
 		
