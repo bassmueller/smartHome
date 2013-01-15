@@ -76,6 +76,11 @@ public class FunctionsFragment extends ListFragment{
 		        				details = new AlarmListFragment();
 		        			}
         					break;
+                	case 2: details = (Fragment) getFragmentManager().findFragmentById(R.id.definescene_layout);
+		                	if(details == null){
+		        				details = new DefineSceneFragment();
+		        			}
+							break;
         			default: details = (Fragment) getFragmentManager().findFragmentById(R.id.alarmClock_layout);
 		        			if(details == null){
 		        				details = new AlarmClockFragment();

@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 
+import android.app.DialogFragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -48,8 +49,8 @@ public class AlarmListFragment extends ListFragment{
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		// Do something with the data
-		
+		DialogFragment newFragment = new OptionsDialog();
+	    newFragment.show(getFragmentManager(), "optionsDialog");
 	}
 
 	@Override

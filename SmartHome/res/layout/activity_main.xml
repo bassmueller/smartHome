@@ -8,8 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="false"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world" />
+        android:layout_centerVertical="true"/>
     
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="fill_parent"
@@ -28,14 +27,12 @@
 	        android:id="@+id/activate_BT_Button"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/activate_BT_Button"
 	        android:onClick="activateBT" />
 	    
 	    <Button
 	        android:id="@+id/discover_BT_Button"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/discover_BT_Button"
 	        android:onClick="discoverBT" />
 	</LinearLayout>
 	
