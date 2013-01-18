@@ -1,15 +1,10 @@
 package com.example.smarthome;
 
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Collections;
+import com.example.smarthome.data.AlarmTime;
+import com.example.smarthome.data.Scene;
+import com.example.smarthome.data.SceneList;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +15,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 public class AlarmClockFragment extends Fragment{
 	
@@ -39,60 +33,28 @@ public class AlarmClockFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				String fileName = "AlarmTimes";
-				AlarmTimeList timeList = null;
 				
-				try{
-					FileInputStream fis = getActivity().openFileInput(fileName);
-					ObjectInputStream is = new ObjectInputStream(fis);
-					timeList = (AlarmTimeList) is.readObject();
-					is.close();
-				}catch(FileNotFoundException e){
-					timeList = new AlarmTimeList();
-				}catch(Exception e){
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				AlarmTime currentSelection = new AlarmTime();
+				EditText description = (EditText) getActivity().findViewById(R.id.alarmDescription);
+				currentSelection.setDescription(description.getText().toString());
+				TimePicker time = (TimePicker)getActivity().findViewById(R.id.alarmTimePicker);
+				DatePicker date = (DatePicker) getActivity().findViewById(R.id.alarmDatePicker);
+				currentSelection.setTime(time.getCurrentHour() + ":" + time.getCurrentMinute());
+				currentSelection.setDate(date.getDayOfMonth() + "." + date.getMonth()+1 + "." + date.getYear());
 				
-				if(timeList != null){
-					AlarmTime currentSelection = new AlarmTime();
-					EditText description = (EditText) getActivity().findViewById(R.id.alarmDescription);
-					currentSelection.setDescription(description.getText().toString());
-					TimePicker time = (TimePicker)getActivity().findViewById(R.id.alarmTimePicker);
-					DatePicker date = (DatePicker) getActivity().findViewById(R.id.alarmDatePicker);
-					currentSelection.setTime(time.getCurrentHour() + ":" + time.getCurrentMinute());
-					currentSelection.setDate(date.getDayOfMonth() + "." + date.getMonth()+1 + "." + date.getYear());
-					
-					timeList.addAlarmTime(currentSelection);
-					Collections.sort(timeList.getAlarmTimeList(), new AlarmTimeComparator());
-					
-					FileOutputStream fos;
-					ObjectOutputStream os;
-					try {
-						fos = getActivity().openFileOutput(fileName, Context.MODE_PRIVATE);
-						os = new ObjectOutputStream(fos);
-						os.writeObject(timeList);
-						os.close();
-						toastMessage("Saved!");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						toastMessage("Not saved!");
-					}
-				}else{
-					toastMessage("Not saved!");
-				}
+				MainActivity activity = (MainActivity)getActivity();
+				activity.appendToList(fileName, currentSelection);
 			}
 		});
 		
 		MainActivity activity = (MainActivity)getActivity();
-		SceneList sceneList = activity.<SceneList>readFile("Scenes");
+		SceneList sceneList = activity.<SceneList>readList("Scenes");
 		
 		Spinner spinner = (Spinner) getActivity().findViewById(R.id.sceneSpinner);
 		
 		if(sceneList != null){
-			Scene[]scenes = (Scene[]) sceneList.getScenes().toArray(new Scene[sceneList.getScenes().size()]);
+			Scene[]scenes = (Scene[]) sceneList.getEntireList().toArray(new Scene[sceneList.getEntireList().size()]);
 			ArrayAdapter<Scene> adapter = new ArrayAdapter<Scene>(getActivity(), android.R.layout.simple_list_item_1, scenes);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spinner.setAdapter(adapter);
@@ -103,10 +65,6 @@ public class AlarmClockFragment extends Fragment{
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-	}
-	
-	private void toastMessage(String text){
-		Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
 	}
 
 }

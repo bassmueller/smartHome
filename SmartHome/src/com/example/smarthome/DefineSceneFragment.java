@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import com.example.smarthome.data.Scene;
+import com.example.smarthome.data.SceneList;
+
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -89,7 +92,7 @@ public class DefineSceneFragment extends Fragment{
 					currentSelection.setLightShow(isLightShow);
 					currentSelection.setSoundEffects(isSoundEffects);
 					
-					sceneList.addScene(currentSelection);
+					sceneList.addItem(currentSelection);
 					
 					FileOutputStream fos;
 					ObjectOutputStream os;

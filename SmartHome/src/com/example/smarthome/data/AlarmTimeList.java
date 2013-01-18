@@ -1,10 +1,10 @@
-package com.example.smarthome;
+package com.example.smarthome.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlarmTimeList implements Serializable {
+public class AlarmTimeList implements Serializable,IStoredList<AlarmTime> {
 	
 	private static final long serialVersionUID = 2533088355622978100L;
 	private List<AlarmTime> alarmTimes;
@@ -13,15 +13,18 @@ public class AlarmTimeList implements Serializable {
 		this.alarmTimes = new ArrayList<AlarmTime>();
 	}
 
-	public List<AlarmTime> getAlarmTimeList() {
+	@Override
+	public List<AlarmTime> getEntireList() {
 		return this.alarmTimes;
 	}
 
-	public void addAlarmTime(AlarmTime alarmTime) {
-		this.alarmTimes.add(alarmTime);
+	@Override
+	public void addItem(AlarmTime object) {
+		this.alarmTimes.add(object);
 	}
-	
-	public AlarmTime removeAlarmTime(int location) {
+
+	@Override
+	public AlarmTime removeItem(int location) {
 		return this.alarmTimes.remove(location);
 	}
 

@@ -1,4 +1,4 @@
-package com.example.smarthome;
+package com.example.smarthome.data;
 
 import java.io.Serializable;
 
@@ -32,7 +32,7 @@ public class Scene implements Serializable {
 	
 	@Override
 	public String toString() {
-		return (this.description + "  " + this.lightShow + "  " + this.soundEffects);
+		return ("Scene " + this.description);
 	}
 
 }

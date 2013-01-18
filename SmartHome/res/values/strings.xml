@@ -11,12 +11,12 @@
     <string name="sceneDescriptionField">scene name</string>
     <string name="sceneLightshow">Wake-Up lightshow</string>
     <string name="sceneAudio">Sound-effects</string>
-        <string name="sceneSave">save scene</string>
+    <string name="sceneSave">save scene</string>
+    <string name="alarmChange">save changes</string>
+    <string name="cancel">cancel</string>
     
     <string-array name="choicesOptionsDialog">
-        <item>Change time</item>
-        <item>Change date</item>
-        <item>Change scene</item>
+        <item>Change item</item>
         <item>Delete item</item>
         <item>Cancel</item>
     </string-array>

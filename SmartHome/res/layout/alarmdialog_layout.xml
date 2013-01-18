@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/alarmDialog_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <ScrollView 
+	    android:id="@+id/alarmScrollView"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent">
+	
+		<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:id="@+id/alarmDialog_subLayout"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:paddingLeft="16dp"
+		    android:paddingRight="16dp"
+		    android:isScrollContainer="true"
+		    android:scrollbars="vertical" >
+		    
+		    <EditText
+		        android:id="@+id/alarmChangeDescription"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp"
+		        android:hint="@string/alarmDefaultDescription" />
+		    
+		    <TimePicker
+		        android:id="@+id/alarmChangeTimePicker"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/alarmChangeDescription"
+		        android:layout_marginTop="20dp"
+		        android:layout_centerHorizontal="true" />
+		    
+		    <DatePicker
+		        android:id="@+id/alarmChangeDatePicker"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/alarmChangeTimePicker"
+		        android:layout_marginTop="20dp"
+		        android:layout_centerHorizontal="true" />
+		    
+		    <Spinner
+			    android:id="@+id/sceneChangeSpinner"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_below="@id/alarmChangeDatePicker"
+			    android:layout_marginTop="20dp"
+			    android:layout_marginBottom="20dp"
+		        android:layout_centerHorizontal="true" />
+		
+		</RelativeLayout>
+	
+	</ScrollView>
+    
+
+</LinearLayout>

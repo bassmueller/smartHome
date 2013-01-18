@@ -1,4 +1,4 @@
-package com.example.smarthome;
+package com.example.smarthome.data;
 
 import java.io.Serializable;
 
