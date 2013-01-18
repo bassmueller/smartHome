@@ -1,9 +1,4 @@
 package com.example.smarthome;
-
-import com.example.smarthome.data.AlarmTime;
-import com.example.smarthome.data.Scene;
-import com.example.smarthome.data.SceneList;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;

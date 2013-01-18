@@ -1,13 +1,13 @@
 package com.example.smarthome;
 
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import com.example.smarthome.data.Scene;
-import com.example.smarthome.data.SceneList;
+
 
 import android.app.Fragment;
 import android.content.Context;

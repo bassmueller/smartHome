@@ -1,4 +1,5 @@
-package com.example.smarthome.data;
+package com.example.smarthome;
+
 
 import java.util.List;
 

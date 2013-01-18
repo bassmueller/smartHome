@@ -9,21 +9,15 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import com.example.smarthome.data.AlarmTime;
-import com.example.smarthome.data.AlarmTimeComparator;
-import com.example.smarthome.data.AlarmTimeList;
-import com.example.smarthome.data.IStoredList;
-import com.example.smarthome.data.Scene;
-import com.example.smarthome.data.SceneList;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.view.Menu;
 import android.widget.Toast;
 
-
 public class MainActivity extends Activity {
+	
+	public static final String TAG = "com.exampe.smarthome";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,15 +65,14 @@ public class MainActivity extends Activity {
 		return loadedObject;
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	synchronized public <T extends Serializable> T readSpecificObject(String fileName, int location, Class typeOfListFile){
-		IStoredList<T> list = null;
-		if(typeOfListFile == AlarmTimeList.class){
+	synchronized public <T extends Serializable> T readSpecificObject(String fileName, int location){
+		IStoredList<T> list = this.readList(fileName);
+		/*if(typeOfListFile == AlarmTimeList.class){
 			list = (IStoredList<T>) this.<AlarmTimeList>readList(fileName);
 		}else if(typeOfListFile == SceneList.class){
 			list = (IStoredList<T>) this.<SceneList>readList(fileName);
-		}
-		return list.getEntireList().get(location);
+		}*/
+		return (list!=null)?list.getEntireList().get(location):null;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -128,7 +121,12 @@ public class MainActivity extends Activity {
 		}
 	}
 	
-	private void toastMessage(String text){
+	synchronized public <T extends Serializable> void changeItem(String fileName, T objectToSave, int location){
+		IStoredList<T> list = this.readList(fileName);
+		list.getEntireList().set(location, objectToSave);
+	}
+	
+	public void toastMessage(String text){
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	}
 

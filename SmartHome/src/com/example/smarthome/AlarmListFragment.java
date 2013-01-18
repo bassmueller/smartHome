@@ -1,7 +1,5 @@
 package com.example.smarthome;
 
-import com.example.smarthome.data.AlarmTime;
-import com.example.smarthome.data.AlarmTimeList;
 
 import android.app.DialogFragment;
 import android.app.ListFragment;
@@ -37,7 +35,9 @@ public class AlarmListFragment extends ListFragment{
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		DialogFragment newFragment = new OptionsDialog();
-		newFragment.setArguments(new Bundle(position));
+		Bundle args = new Bundle();
+		args.putInt("position", position);
+		newFragment.setArguments(args);
 	    newFragment.show(getFragmentManager(), "optionsDialog");
 	}
 
