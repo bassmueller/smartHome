@@ -67,11 +67,6 @@ public class MainActivity extends Activity {
 	
 	synchronized public <T extends Serializable> T readSpecificObject(String fileName, int location){
 		IStoredList<T> list = this.readList(fileName);
-		/*if(typeOfListFile == AlarmTimeList.class){
-			list = (IStoredList<T>) this.<AlarmTimeList>readList(fileName);
-		}else if(typeOfListFile == SceneList.class){
-			list = (IStoredList<T>) this.<SceneList>readList(fileName);
-		}*/
 		return (list!=null)?list.getEntireList().get(location):null;
 	}
 	
@@ -121,9 +116,33 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	synchronized public <T extends Serializable> void changeItem(String fileName, T objectToSave, int location){
 		IStoredList<T> list = this.readList(fileName);
-		list.getEntireList().set(location, objectToSave);
+		
+		if(list != null){
+			try{
+				list.getEntireList().set(location, objectToSave);
+				Collections.sort((List<AlarmTime>)list.getEntireList(), new AlarmTimeComparator());
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			FileOutputStream fos;
+			ObjectOutputStream os;
+			try {
+				fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+				os = new ObjectOutputStream(fos);
+				os.writeObject(list);
+				os.close();
+				toastMessage("changes saved!");
+			} catch (Exception e) {
+				e.printStackTrace();	
+				toastMessage("Save changes failed!");
+			}
+		}else{
+			toastMessage("Data corrupt! Saving failed!");
+		}
 	}
 	
 	public void toastMessage(String text){

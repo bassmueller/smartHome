@@ -37,6 +37,8 @@ public class AlarmClockFragment extends Fragment{
 				DatePicker date = (DatePicker) getActivity().findViewById(R.id.alarmDatePicker);
 				currentSelection.setTime(time.getCurrentHour() + ":" + time.getCurrentMinute());
 				currentSelection.setDate(date.getDayOfMonth() + "." + date.getMonth()+1 + "." + date.getYear());
+				Spinner spinner = (Spinner)getActivity().findViewById(R.id.sceneSpinner);
+				currentSelection.setScene((Scene)spinner.getSelectedItem());
 				
 				MainActivity activity = (MainActivity)getActivity();
 				activity.appendToList(fileName, currentSelection);

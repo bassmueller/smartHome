@@ -9,6 +9,7 @@ public class AlarmTime implements Serializable {
 	private String description;
 	private String time;
 	private String date;
+	private Scene scene;
 
 	public String getDescription() {
 		return description;
@@ -29,8 +30,15 @@ public class AlarmTime implements Serializable {
 		this.date = date;
 	}
 	
+	public Scene getScene() {
+		return scene;
+	}
+	public void setScene(Scene scene) {
+		this.scene = scene;
+	}
+	
 	@Override
 	public String toString() {
-		return (this.time + "  " + this.date + System.getProperty("line.separator") + this.description);
+		return (this.time + "  " + this.date + System.getProperty("line.separator") + "Description: " + this.description + "Scene: " + this.scene.getDescription());
 	}
 }

@@ -14,9 +14,9 @@ public class AlarmTimeComparator implements Comparator<AlarmTime> {
 	@Override
 	public int compare(AlarmTime lhs, AlarmTime rhs) {
 		String[] leftTime = lhs.getTime().split(":");
-		String[] leftDate = lhs.getDate().split(".");
+		String[] leftDate = lhs.getDate().split("\\.");
 		String[] rightTime = rhs.getTime().split(":");
-		String[] rightDate = rhs.getDate().split(".");
+		String[] rightDate = rhs.getDate().split("\\.");
 		int result = 0;
 		
 		for(int i = leftDate.length; (i > 0) && (result == 0); i--){
