@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 public class OptionsDialog extends DialogFragment {
+	
+	private final String fileNameAlarm = "AlarmTimes";
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -20,9 +22,19 @@ public class OptionsDialog extends DialogFragment {
 	               		newFragment.setArguments(getArguments());
 	            	    newFragment.show(getFragmentManager(), "changeDialog");
 	            	    break;
-               		case 1://delete item
+               		case 1:
+               			MainActivity activity = (MainActivity)getActivity();
+               			try{
+               				activity.deleteSpecificObject(fileNameAlarm, getArguments().getInt("position"));
+                   			activity.toastMessage("Item deleted!");
+               			}catch(Exception e){
+               				e.printStackTrace();
+               				activity.toastMessage("ERROR! Item not deleted!");
+               			}
+               			
                			break;
            			default: 
+           				OptionsDialog.this.getDialog().cancel();
            				break;
 	               }
 	           }

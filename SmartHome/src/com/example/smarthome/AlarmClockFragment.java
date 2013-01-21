@@ -13,6 +13,9 @@ import android.widget.TimePicker;
 
 public class AlarmClockFragment extends Fragment{
 	
+	private final String fileNameAlarm = "AlarmTimes";
+	private final String fileNameScene = "Scenes";
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -28,7 +31,6 @@ public class AlarmClockFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				String fileName = "AlarmTimes";
 				
 				AlarmTime currentSelection = new AlarmTime();
 				EditText description = (EditText) getActivity().findViewById(R.id.alarmDescription);
@@ -41,12 +43,12 @@ public class AlarmClockFragment extends Fragment{
 				currentSelection.setScene((Scene)spinner.getSelectedItem());
 				
 				MainActivity activity = (MainActivity)getActivity();
-				activity.appendToList(fileName, currentSelection);
+				activity.appendToList(fileNameAlarm, currentSelection);
 			}
 		});
 		
 		MainActivity activity = (MainActivity)getActivity();
-		SceneList sceneList = activity.<SceneList>readList("Scenes");
+		SceneList sceneList = activity.<SceneList>readList(fileNameScene);
 		
 		Spinner spinner = (Spinner) getActivity().findViewById(R.id.sceneSpinner);
 		

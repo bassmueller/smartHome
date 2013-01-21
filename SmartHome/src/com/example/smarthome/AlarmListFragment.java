@@ -1,6 +1,5 @@
 package com.example.smarthome;
 
-
 import android.app.DialogFragment;
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -12,17 +11,20 @@ import android.widget.ListView;
 
 public class AlarmListFragment extends ListFragment{
 
+	private final String fileNameAlarm = "AlarmTimes";
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		String fileName = "AlarmTimes";
 
 		MainActivity activity = (MainActivity)getActivity();
-		AlarmTimeList alarmList = activity.<AlarmTimeList>readList(fileName);
+		AlarmTimeList alarmList = activity.<AlarmTimeList>readList(fileNameAlarm);
 		
 		if(alarmList != null){
 			AlarmTime[]times = (AlarmTime[]) alarmList.getEntireList().toArray(new AlarmTime[alarmList.getEntireList().size()]);
 			setListAdapter(new ArrayAdapter<AlarmTime>(getActivity(), android.R.layout.simple_list_item_1, times));
+		}else{
+			setEmptyText("No alarms saved!");
 		}
 	}
 

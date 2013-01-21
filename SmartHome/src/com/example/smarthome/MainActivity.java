@@ -9,13 +9,16 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.view.Menu;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements AlarmChangeDialog.AlarmChangeDialogListener{
 	
 	public static final String TAG = "com.exampe.smarthome";
 
@@ -68,6 +71,24 @@ public class MainActivity extends Activity {
 	synchronized public <T extends Serializable> T readSpecificObject(String fileName, int location){
 		IStoredList<T> list = this.readList(fileName);
 		return (list!=null)?list.getEntireList().get(location):null;
+	}
+	
+	synchronized public <T extends Serializable> T deleteSpecificObject(String fileName, int location){
+		IStoredList<T> list = this.readList(fileName);
+		T objectDeleted = (list!=null)?list.getEntireList().remove(location):null;
+		if(objectDeleted != null){
+			FileOutputStream fos;
+			ObjectOutputStream os;
+			try {
+				fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+				os = new ObjectOutputStream(fos);
+				os.writeObject(list);
+				os.close();
+			} catch (Exception e) {
+				e.printStackTrace();	
+			}
+		}
+		return objectDeleted;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -148,5 +169,21 @@ public class MainActivity extends Activity {
 	public void toastMessage(String text){
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	}
+	
+	@Override
+	public void onDialogPositiveClick(DialogFragment dailog) {
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		ft.replace(R.id.details, new AlarmListFragment());
+	    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+	    ft.commit();
+		
+	}
+
+	@Override
+	public void onDialogNegativeClick(DialogFragment dailog) {
+		// TODO Auto-generated method stub
+		
+	}
+    
 
 }

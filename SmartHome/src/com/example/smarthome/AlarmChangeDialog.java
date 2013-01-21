@@ -1,5 +1,6 @@
 package com.example.smarthome;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -18,11 +19,26 @@ public class AlarmChangeDialog extends DialogFragment {
 	
 	private final String fileNameAlarm = "AlarmTimes";
 	private final String fileNameScene = "Scenes";
+	private AlarmChangeDialogListener listener;
 
+	public interface AlarmChangeDialogListener{
+		public void onDialogPositiveClick(DialogFragment dailog);
+		public void onDialogNegativeClick(DialogFragment dailog);
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try{
+			listener = (AlarmChangeDialogListener)activity;
+		}catch(ClassCastException e){
+			throw new ClassCastException(activity.toString() + " must implement AlarmChangeDialogListener");
+		}
+	}
+	
 	@SuppressWarnings("static-access")
 	@Override
 	public void onStart() {
-		// TODO Auto-generated method stub
 		super.onStart();
 		MainActivity activity = (MainActivity)getActivity();
 		Log.v(activity.TAG,"Argument 'position' in " + this.getClass() + ":" + String.valueOf(getArguments().getInt("position")));
@@ -111,11 +127,13 @@ public class AlarmChangeDialog extends DialogFragment {
 	            	   }else{
 	            		   activity.toastMessage("Object to change not found!");
 	            	   }
+	            	   listener.onDialogPositiveClick(AlarmChangeDialog.this);
 	               }
 	           })
 	           .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 	               public void onClick(DialogInterface dialog, int id) {
 	                   AlarmChangeDialog.this.getDialog().cancel();
+	                   listener.onDialogNegativeClick(AlarmChangeDialog.this);
 	               }
 	           });      
 	    return builder.create();
