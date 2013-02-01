@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class FunctionsFragment extends ListFragment{
+	//private final String TAG = FunctionsFragment.class.getSimpleName();
 	boolean mDualPane;
     int mCurCheckPosition = 0;
 
@@ -104,7 +105,7 @@ public class FunctionsFragment extends ListFragment{
             intent.putExtra("index", index);
             startActivity(intent);
         }
-    	 mCurCheckPosition = index;
+    	mCurCheckPosition = index;
     }
 
 }

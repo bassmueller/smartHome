@@ -17,14 +17,13 @@ public class AlarmListFragment extends ListFragment{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		MainActivity activity = (MainActivity)getActivity();
-		AlarmTimeList alarmList = activity.<AlarmTimeList>readList(fileNameAlarm);
+		AlarmTimeList alarmList = InstanceSave.<AlarmTimeList>readList(fileNameAlarm, getActivity());
 		
 		if(alarmList != null){
 			AlarmTime[]times = (AlarmTime[]) alarmList.getEntireList().toArray(new AlarmTime[alarmList.getEntireList().size()]);
 			setListAdapter(new ArrayAdapter<AlarmTime>(getActivity(), android.R.layout.simple_list_item_1, times));
 		}else{
-			setEmptyText("No alarms saved!");
+			//setEmptyText("No alarms saved!");
 		}
 	}
 
@@ -45,7 +44,6 @@ public class AlarmListFragment extends ListFragment{
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 	}
 	

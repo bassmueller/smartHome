@@ -36,13 +36,11 @@ public class AlarmChangeDialog extends DialogFragment {
 		}
 	}
 	
-	@SuppressWarnings("static-access")
 	@Override
 	public void onStart() {
 		super.onStart();
-		MainActivity activity = (MainActivity)getActivity();
-		Log.v(activity.TAG,"Argument 'position' in " + this.getClass() + ":" + String.valueOf(getArguments().getInt("position")));
-		AlarmTime selectedAlarm = activity.<AlarmTime>readSpecificObject(fileNameAlarm, getArguments().getInt("position"));
+
+		AlarmTime selectedAlarm = InstanceSave.<AlarmTime>readSpecificObject(fileNameAlarm, getArguments().getInt("position"), getActivity());
 		if(selectedAlarm != null){
 			EditText description = (EditText)getDialog().findViewById(R.id.alarmChangeDescription);
 			try {
@@ -60,7 +58,7 @@ public class AlarmChangeDialog extends DialogFragment {
 			String[] date = selectedAlarm.getDate().split("\\.");
 			datePicker.updateDate(Integer.valueOf(date[2]), Integer.valueOf(date[1])-1, Integer.valueOf(date[0]));
 			
-			SceneList sceneList = activity.<SceneList>readList(fileNameScene);
+			SceneList sceneList = InstanceSave.<SceneList>readList(fileNameScene, getActivity());
 			Spinner spinner = (Spinner) getDialog().findViewById(R.id.sceneChangeSpinner);
 			if(sceneList != null){
 				Scene[]scenes = (Scene[]) sceneList.getEntireList().toArray(new Scene[sceneList.getEntireList().size()]);
@@ -74,11 +72,11 @@ public class AlarmChangeDialog extends DialogFragment {
 				if(i <= scenes.length){
 					spinner.setSelection(i);
 				}else{
-					activity.toastMessage("Select new Scene! Old Scene was removed from List");
+					MainActivity.toastMessage("Select new Scene! Old Scene was removed from List", getActivity());
 				}
 			}
 		}else{
-			activity.toastMessage("Element not found!");
+			MainActivity.toastMessage("Element not found!", getActivity());
 			AlarmChangeDialog.this.getDialog().cancel();
 		}
 	}
@@ -108,8 +106,7 @@ public class AlarmChangeDialog extends DialogFragment {
 	               @Override
 	               public void onClick(DialogInterface dialog, int id) {
 	            	   
-	            	   MainActivity activity = (MainActivity)getActivity();
-	            	   IStoredList<AlarmTime> list = activity.readList(fileNameAlarm);
+	            	   IStoredList<AlarmTime> list = InstanceSave.readList(fileNameAlarm, getActivity());
 	            	   AlarmTime alarmToChange = null;
 	            	   if(list != null){
 	            		   alarmToChange = list.getEntireList().get(getArguments().getInt("position"));
@@ -120,12 +117,12 @@ public class AlarmChangeDialog extends DialogFragment {
 		            	   TimePicker time = (TimePicker)getDialog().findViewById(R.id.alarmChangeTimePicker);
 		            	   DatePicker date = (DatePicker) getDialog().findViewById(R.id.alarmChangeDatePicker);
 		            	   alarmToChange.setTime(time.getCurrentHour() + ":" + time.getCurrentMinute());
-		            	   alarmToChange.setDate(date.getDayOfMonth() + "." + date.getMonth()+1 + "." + date.getYear());
+		            	   alarmToChange.setDate(date.getDayOfMonth() + "." + (date.getMonth()+1) + "." + date.getYear());
 		            	   Spinner spinner = (Spinner) getDialog().findViewById(R.id.sceneChangeSpinner);
 		            	   alarmToChange.setScene((Scene)spinner.getSelectedItem());
-		            	   activity.changeItem(fileNameAlarm, alarmToChange, getArguments().getInt("position"));
+		            	   InstanceSave.changeItem(fileNameAlarm, alarmToChange, getArguments().getInt("position"), getActivity());
 	            	   }else{
-	            		   activity.toastMessage("Object to change not found!");
+	            		   MainActivity.toastMessage("Object to change not found!", getActivity());
 	            	   }
 	            	   listener.onDialogPositiveClick(AlarmChangeDialog.this);
 	               }

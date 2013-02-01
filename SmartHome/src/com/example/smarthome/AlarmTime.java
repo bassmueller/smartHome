@@ -39,6 +39,6 @@ public class AlarmTime implements Serializable {
 	
 	@Override
 	public String toString() {
-		return (this.time + "  " + this.date + System.getProperty("line.separator") + "Description: " + this.description + "                       Scene: " + this.scene.getDescription());
+		return (this.time + "  " + this.date + System.getProperty("line.separator") + "Description: " + this.description + " Scene: " + (this.scene != null?this.scene.getDescription():"no scene"));
 	}
 }

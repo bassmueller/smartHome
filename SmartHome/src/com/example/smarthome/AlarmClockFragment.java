@@ -38,17 +38,16 @@ public class AlarmClockFragment extends Fragment{
 				TimePicker time = (TimePicker)getActivity().findViewById(R.id.alarmTimePicker);
 				DatePicker date = (DatePicker) getActivity().findViewById(R.id.alarmDatePicker);
 				currentSelection.setTime(time.getCurrentHour() + ":" + time.getCurrentMinute());
-				currentSelection.setDate(date.getDayOfMonth() + "." + date.getMonth()+1 + "." + date.getYear());
+				currentSelection.setDate(date.getDayOfMonth() + "." + (date.getMonth()+1) + "." + date.getYear());
 				Spinner spinner = (Spinner)getActivity().findViewById(R.id.sceneSpinner);
 				currentSelection.setScene((Scene)spinner.getSelectedItem());
-				
-				MainActivity activity = (MainActivity)getActivity();
-				activity.appendToList(fileNameAlarm, currentSelection);
+
+				InstanceSave.appendToList(fileNameAlarm, currentSelection, getActivity());
 			}
 		});
 		
-		MainActivity activity = (MainActivity)getActivity();
-		SceneList sceneList = activity.<SceneList>readList(fileNameScene);
+
+		SceneList sceneList = InstanceSave.<SceneList>readList(fileNameScene, getActivity());
 		
 		Spinner spinner = (Spinner) getActivity().findViewById(R.id.sceneSpinner);
 		
@@ -62,7 +61,6 @@ public class AlarmClockFragment extends Fragment{
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 	}
 

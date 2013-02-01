@@ -23,13 +23,12 @@ public class OptionsDialog extends DialogFragment {
 	            	    newFragment.show(getFragmentManager(), "changeDialog");
 	            	    break;
                		case 1:
-               			MainActivity activity = (MainActivity)getActivity();
                			try{
-               				activity.deleteSpecificObject(fileNameAlarm, getArguments().getInt("position"));
-                   			activity.toastMessage("Item deleted!");
+               				InstanceSave.deleteSpecificObject(fileNameAlarm, getArguments().getInt("position"), getActivity());
+                   			MainActivity.toastMessage("Item deleted!", getActivity());
                			}catch(Exception e){
                				e.printStackTrace();
-               				activity.toastMessage("ERROR! Item not deleted!");
+               				MainActivity.toastMessage("ERROR! Item not deleted!", getActivity());
                			}
                			
                			break;
