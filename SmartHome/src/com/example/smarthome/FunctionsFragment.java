@@ -11,8 +11,8 @@ import android.widget.ListView;
 
 public class FunctionsFragment extends ListFragment{
 	//private final String TAG = FunctionsFragment.class.getSimpleName();
-	boolean mDualPane;
-    int mCurCheckPosition = 0;
+	boolean dual;
+    int position = 0;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -25,25 +25,25 @@ public class FunctionsFragment extends ListFragment{
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
         View detailsFrame = getActivity().findViewById(R.id.details);
-        mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
+        dual = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 
         if (savedInstanceState != null) {
             // Restore last state for checked position.
-            mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
+            position = savedInstanceState.getInt("currentChoice", 0);
         }
 
-        if (mDualPane) {
+        if (dual) {
             // In dual-pane mode, the list view highlights the selected item.
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             // Make sure our UI is in the correct state.
-            showDetails(mCurCheckPosition);
+            showDetails(position);
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("curChoice", mCurCheckPosition);
+        outState.putInt("currentChoice", position);
     }
 
     @Override
@@ -57,13 +57,13 @@ public class FunctionsFragment extends ListFragment{
      * whole new activity in which it is displayed.
      */
     void showDetails(int index) {
-    	if (mDualPane) {
+    	if (dual) {
             // We can display everything in-place with fragments, so update
             // the list to highlight the selected item and show the data.
             getListView().setItemChecked(index, true);
 
             // Check what fragment is currently shown, replace if needed.
-            if (mCurCheckPosition != index || mCurCheckPosition == 0) {
+            if (position != index || position == 0) {
             	
             	Fragment details = null;
                 switch(index){
@@ -105,7 +105,7 @@ public class FunctionsFragment extends ListFragment{
             intent.putExtra("index", index);
             startActivity(intent);
         }
-    	mCurCheckPosition = index;
+    	position = index;
     }
 
 }

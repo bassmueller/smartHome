@@ -54,7 +54,6 @@ public class AlarmChangeDialog extends DialogFragment {
 			timePicker.setCurrentHour(Integer.valueOf(time[0]));
 			timePicker.setCurrentMinute(Integer.valueOf(time[1]));
 			DatePicker datePicker = (DatePicker)getDialog().findViewById(R.id.alarmChangeDatePicker);
-			Log.i("Log", selectedAlarm.getDate()+" Error!"); // LogCat message
 			String[] date = selectedAlarm.getDate().split("\\.");
 			datePicker.updateDate(Integer.valueOf(date[2]), Integer.valueOf(date[1])-1, Integer.valueOf(date[0]));
 			

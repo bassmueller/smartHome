@@ -15,6 +15,13 @@ public class MainActivity extends Activity implements AlarmChangeDialog.AlarmCha
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_layout);
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
 
 	@Override
 	protected void onDestroy() {
@@ -29,14 +36,12 @@ public class MainActivity extends Activity implements AlarmChangeDialog.AlarmCha
 	     */
 	    System.exit(0);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
-	}
 	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+	}
+
 	static public void toastMessage(String text, Activity context){
 		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 	}
