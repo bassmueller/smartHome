@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class AlarmListFragment extends ListFragment{
@@ -20,8 +19,7 @@ public class AlarmListFragment extends ListFragment{
 		AlarmTimeList alarmList = InstanceSave.<AlarmTimeList>readList(fileNameAlarm, getActivity());
 		
 		if(alarmList != null){
-			AlarmTime[]times = (AlarmTime[]) alarmList.getEntireList().toArray(new AlarmTime[alarmList.getEntireList().size()]);
-			setListAdapter(new ArrayAdapter<AlarmTime>(getActivity(), android.R.layout.simple_list_item_1, times));
+			setListAdapter(new ListAdapter<AlarmTime>(getActivity(), R.layout.listitem, alarmList.getEntireList()));
 		}else{
 			//setEmptyText("No alarms saved!");
 		}

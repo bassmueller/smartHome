@@ -9,6 +9,7 @@ public class AlarmTime implements Serializable {
 	private String description;
 	private String time;
 	private String date;
+	private boolean active;
 	private Scene scene;
 
 	public String getDescription() {
@@ -28,6 +29,13 @@ public class AlarmTime implements Serializable {
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 	public Scene getScene() {

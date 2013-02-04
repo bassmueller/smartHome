@@ -52,6 +52,10 @@
 		android:paddingRight="16dp"
 		android:isScrollContainer="true" >
 	</ListView>
+	
+    <FrameLayout android:id="@+id/sceneList" 
+            android:layout_width="0px" android:layout_height="wrap_content"
+            android:background="?android:attr/detailsElementBackground" />
 
 </RelativeLayout>
 

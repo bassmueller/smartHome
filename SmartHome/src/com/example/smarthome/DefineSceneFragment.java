@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -132,6 +133,11 @@ public class DefineSceneFragment extends Fragment{
 		if(scenes != null){
 			setAdapter(new ArrayAdapter<Scene>(getActivity(), android.R.layout.simple_list_item_1, scenes));
 		}*/
+		
+		/*FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.sceneList, (Fragment) getFragmentManager().findFragmentById(R.id.alarmList_layout));
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();*/
 	}
 
 	@Override

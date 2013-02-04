@@ -86,6 +86,12 @@ public class InstanceSave {
 			list.addItem(objectToAppend);
 			if(objectToAppend instanceof AlarmTime){
 				Collections.sort((List<AlarmTime>)list.getEntireList(), new AlarmTimeComparator());
+				for(int i = 0; i < list.getEntireList().size(); i++){
+					AlarmTime alarmTime = (AlarmTime) list.getEntireList().get(i);
+					alarmTime.setActive(false);
+				}
+				AlarmTime firstAlarmTime = (AlarmTime) list.getEntireList().get(0);
+				firstAlarmTime.setActive(true);
 			}
 			
 			FileOutputStream fos;
