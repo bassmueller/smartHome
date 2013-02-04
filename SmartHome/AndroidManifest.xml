@@ -9,7 +9,6 @@
         android:targetSdkVersion="16" />
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:allowBackup="true"
@@ -34,6 +33,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter> -->
         </activity>
+        <activity android:name=".DeviceListActivity"
+                  android:label="@string/select_device"
+                  android:theme="@android:style/Theme.Holo.Dialog"
+                  android:configChanges="orientation|keyboardHidden" />
+        
+        <activity android:name=".ColourWheelActivity" />
+        
+        <service android:name=".SmartAlarmClockService" android:enabled="true" android:permission="android.permission.BLUETOOTH"/>
     </application>
 
 </manifest>

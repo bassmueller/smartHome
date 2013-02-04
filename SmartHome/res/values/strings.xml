@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">SmartHome</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_connect">connect</string>
+    <string name="menu_disconnect">disconnect</string>
     <string name="close_App_Button">Close</string>
     <string name="alarmDefaultDescription">Description</string>
     <string name="alarmSave">Save</string>
@@ -20,5 +21,33 @@
         <item>Delete item</item>
         <item>Cancel</item>
     </string-array>
+    
+    <!-- AlertDialog -->
+	<string name="alert_dialog_no_bt">Cannot use this application without bluetooth.</string>
+	<string name="alert_dialog_yes">Yes</string>
+	<string name="alert_dialog_no">No</string>
+	<string name="alert_dialog_warning_title">Warning</string>
+	<string name="alert_dialog_ok">OK</string>
+	<string name="alert_dialog_turn_on_bt">This application needs the Bluetooth. Do you want turn on?</string>
+	  
+    <string name="bluetooth_open">Bluetooth Öffnen</string>
+    
+    <!--  DeviceListActivity -->
+    <string name="scanning">scanning for devices&#8230;</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
+    
+    <!--  MainActivityTesting -->
+    <string name="bluetooth_devicelist">Bluetooth Device List</string>
+    <string name="color_wheel_activity_button">Color Wheel</string>
+    <string name="hello">CircleSeekBarActivity</string>
+    <string name="send_character_button">LED On/Off</string>
+    <string name="connect_button">Connect</string>
+    <string name="disconnect_button">Disconnet</string>
+    
 
 </resources>
