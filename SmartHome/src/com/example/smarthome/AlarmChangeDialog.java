@@ -111,14 +111,28 @@ public class AlarmChangeDialog extends DialogFragment {
 	            		   alarmToChange = list.getEntireList().get(getArguments().getInt("position"));
 	            	   }
 	            	   if(alarmToChange != null){
+	            		   SmartAlarmClockService service = null;
+		       				if(getActivity() instanceof MainActivity){
+		       					service =((MainActivity)getActivity()).mSACService;
+		       				}else if(getActivity() instanceof DetailsActivity){
+		       					service = ((DetailsActivity)getActivity()).mSACService;
+		       				}
 		            	   EditText description = (EditText) getDialog().findViewById(R.id.alarmChangeDescription);
 		            	   alarmToChange.setDescription(description.getText().toString());
 		            	   TimePicker time = (TimePicker)getDialog().findViewById(R.id.alarmChangeTimePicker);
 		            	   DatePicker date = (DatePicker) getDialog().findViewById(R.id.alarmChangeDatePicker);
-		            	   alarmToChange.setTime(time.getCurrentHour() + ":" + time.getCurrentMinute());
-		            	   alarmToChange.setDate(date.getDayOfMonth() + "." + (date.getMonth()+1) + "." + date.getYear());
+		            	   service.write(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
+		            	   service.write(String.format("D%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
+		            	   alarmToChange.setTime(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
+		            	   alarmToChange.setDate(String.format("D%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
 		            	   Spinner spinner = (Spinner) getDialog().findViewById(R.id.sceneChangeSpinner);
 		            	   alarmToChange.setScene((Scene)spinner.getSelectedItem());
+		            	   
+		            	   //Alarm On
+		            	   service.write("a++a");
+		            	   //RGB On
+		            	   service.write("La");
+		            	   
 		            	   InstanceSave.changeItem(fileNameAlarm, alarmToChange, getArguments().getInt("position"), getActivity());
 	            	   }else{
 	            		   MainActivity.toastMessage("Object to change not found!", getActivity());

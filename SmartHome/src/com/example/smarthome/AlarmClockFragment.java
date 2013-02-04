@@ -35,22 +35,24 @@ public class AlarmClockFragment extends Fragment{
 				if(getActivity() instanceof MainActivity){
 					service =((MainActivity)getActivity()).mSACService;
 				}else if(getActivity() instanceof DetailsActivity){
-					//service = ((DetailsActivity)getActivity()).mSACService;
+					service = ((DetailsActivity)getActivity()).mSACService;
 				}
 				AlarmTime currentSelection = new AlarmTime();
 				EditText description = (EditText) getActivity().findViewById(R.id.alarmDescription);
 				currentSelection.setDescription(description.getText().toString());
 
 				TimePicker time = (TimePicker)getActivity().findViewById(R.id.alarmTimePicker);
-				service.write(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
 				DatePicker date = (DatePicker) getActivity().findViewById(R.id.alarmDatePicker);
-				currentSelection.setTime(time.getCurrentHour() + ":" + time.getCurrentMinute());
-				currentSelection.setDate(date.getDayOfMonth() + "." + (date.getMonth()+1) + "." + date.getYear());
+				currentSelection.setTime(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
+				currentSelection.setDate(String.format("D%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
 				service.write(String.format("D%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
+				service.write(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
 				Spinner spinner = (Spinner)getActivity().findViewById(R.id.sceneSpinner);
 				currentSelection.setScene((Scene)spinner.getSelectedItem());
 				
+				//Alarm On
 				service.write("a++a");
+				//RGB On
 				service.write("La");
 
 				InstanceSave.appendToList(fileNameAlarm, currentSelection, getActivity());
