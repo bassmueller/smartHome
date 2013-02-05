@@ -45,14 +45,15 @@ public class AlarmClockFragment extends Fragment{
 				DatePicker date = (DatePicker) getActivity().findViewById(R.id.alarmDatePicker);
 				currentSelection.setTime(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
 				currentSelection.setDate(String.format("D%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
-				service.write(String.format("D%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
-				service.write(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
+				//service.write(String.format("D%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
+				//service.write(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
 				Spinner spinner = (Spinner)getActivity().findViewById(R.id.sceneSpinner);
 				currentSelection.setScene((Scene)spinner.getSelectedItem());
 				
 				//Alarm On
-				service.write("a++a");
+				//service.write("a++a");
 				//RGB On
+				service.write("Cu123123123");
 				service.write("La");
 
 				InstanceSave.appendToList(fileNameAlarm, currentSelection, getActivity());
