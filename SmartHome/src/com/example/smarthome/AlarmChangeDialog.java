@@ -37,60 +37,10 @@ public class AlarmChangeDialog extends DialogFragment {
 	}
 	
 	@Override
-	public void onStart() {
-		super.onStart();
-
-		AlarmTime selectedAlarm = InstanceSave.<AlarmTime>readSpecificObject(fileNameAlarm, getArguments().getInt("position"), getActivity());
-		if(selectedAlarm != null){
-			EditText description = (EditText)getDialog().findViewById(R.id.alarmChangeDescription);
-			try {
-				description.setText(selectedAlarm.getDescription(), TextView.BufferType.EDITABLE);
-            }catch(Exception e) {
-                Log.i("Log", e.getMessage()+" Error!"); // LogCat message
-            }
-			
-			TimePicker timePicker = (TimePicker)getDialog().findViewById(R.id.alarmChangeTimePicker);
-			String[] time = selectedAlarm.getTime().split(":");
-			timePicker.setCurrentHour(Integer.valueOf(time[0]));
-			timePicker.setCurrentMinute(Integer.valueOf(time[1]));
-			DatePicker datePicker = (DatePicker)getDialog().findViewById(R.id.alarmChangeDatePicker);
-			String[] date = selectedAlarm.getDate().split("\\.");
-			datePicker.updateDate(Integer.valueOf(date[2]), Integer.valueOf(date[1])-1, Integer.valueOf(date[0]));
-			
-			SceneList sceneList = InstanceSave.<SceneList>readList(fileNameScene, getActivity());
-			Spinner spinner = (Spinner) getDialog().findViewById(R.id.sceneChangeSpinner);
-			if(sceneList != null){
-				Scene[]scenes = (Scene[]) sceneList.getEntireList().toArray(new Scene[sceneList.getEntireList().size()]);
-				ArrayAdapter<Scene> adapter = new ArrayAdapter<Scene>(getActivity(), android.R.layout.simple_list_item_1, scenes);
-				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				spinner.setAdapter(adapter);
-				int i = 0;
-				while((i < scenes.length) && (selectedAlarm.getScene().getDescription().compareTo(scenes[i].getDescription()) != 0)) {
-					i++;
-				}
-				if(i <= scenes.length){
-					spinner.setSelection(i);
-				}else{
-					MainActivity.toastMessage("Select new Scene! Old Scene was removed from List", getActivity());
-				}
-			}
-		}else{
-			MainActivity.toastMessage("Element not found!", getActivity());
-			AlarmChangeDialog.this.getDialog().cancel();
-		}
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	}
-
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
-
+	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -143,6 +93,55 @@ public class AlarmChangeDialog extends DialogFragment {
 	               }
 	           });      
 	    return builder.create();
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		AlarmTime selectedAlarm = InstanceSave.<AlarmTime>readSpecificObject(fileNameAlarm, getArguments().getInt("position"), getActivity());
+		if(selectedAlarm != null){
+			EditText description = (EditText)getDialog().findViewById(R.id.alarmChangeDescription);
+			try {
+				description.setText(selectedAlarm.getDescription(), TextView.BufferType.EDITABLE);
+            }catch(Exception e) {
+                Log.i("Log", e.getMessage()+" Error!"); // LogCat message
+            }
+			
+			TimePicker timePicker = (TimePicker)getDialog().findViewById(R.id.alarmChangeTimePicker);
+			String[] time = selectedAlarm.getTime().split(":");
+			timePicker.setCurrentHour(Integer.valueOf(time[0]));
+			timePicker.setCurrentMinute(Integer.valueOf(time[1]));
+			DatePicker datePicker = (DatePicker)getDialog().findViewById(R.id.alarmChangeDatePicker);
+			String[] date = selectedAlarm.getDate().split("\\.");
+			datePicker.updateDate(Integer.valueOf(date[2]), Integer.valueOf(date[1])-1, Integer.valueOf(date[0]));
+			
+			SceneList sceneList = InstanceSave.<SceneList>readList(fileNameScene, getActivity());
+			Spinner spinner = (Spinner) getDialog().findViewById(R.id.sceneChangeSpinner);
+			if(sceneList != null){
+				Scene[]scenes = (Scene[]) sceneList.getEntireList().toArray(new Scene[sceneList.getEntireList().size()]);
+				ArrayAdapter<Scene> adapter = new ArrayAdapter<Scene>(getActivity(), android.R.layout.simple_list_item_1, scenes);
+				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				spinner.setAdapter(adapter);
+				int i = 0;
+				while((i < scenes.length) && (selectedAlarm.getScene().getDescription().compareTo(scenes[i].getDescription()) != 0)) {
+					i++;
+				}
+				if(i <= scenes.length){
+					spinner.setSelection(i);
+				}else{
+					MainActivity.toastMessage("Select new Scene! Old Scene was removed from List", getActivity());
+				}
+			}
+		}else{
+			MainActivity.toastMessage("Element not found!", getActivity());
+			AlarmChangeDialog.this.getDialog().cancel();
+		}
 	}
 
 }

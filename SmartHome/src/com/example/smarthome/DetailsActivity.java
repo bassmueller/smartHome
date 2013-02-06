@@ -21,9 +21,7 @@ public class DetailsActivity extends Activity implements AlarmChangeDialogListen
 	private static final String TAG = MainActivity.class.getSimpleName();
     private static final boolean D = true;
     
-    private static final int REQUEST_ENABLE_BT = 1;
 	private static final int REQUEST_CONNECT_BT_DEVICE = 2;
-	private static final int REQUEST_RGB_COLORS = 3;
 	public static final String EXTRA_BT_REMOTE_ADDRESS = "bt_remote_address";
 	public static String rgbLED = "000255000";
 	
@@ -68,7 +66,7 @@ public class DetailsActivity extends Activity implements AlarmChangeDialogListen
      					break;
              }
 
-             //details.setArguments(getIntent().getExtras());
+             details.setArguments(getIntent().getExtras());
              getFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
          }
      }
@@ -110,7 +108,7 @@ public class DetailsActivity extends Activity implements AlarmChangeDialogListen
 
 	@Override
 	public void onDialogNegativeClick(DialogFragment dailog) {
-		// TODO Auto-generated method stub
+
 		
 	}
 	
@@ -136,13 +134,13 @@ public class DetailsActivity extends Activity implements AlarmChangeDialogListen
 
 	@Override
 	public void onDialogPositiveClickCW(DialogFragment dailog) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public void onDialogNegativeClickCW(DialogFragment dailog) {
-		// TODO Auto-generated method stub
+
 		
 	}
 

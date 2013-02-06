@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
@@ -79,7 +77,6 @@ public class DefineSceneFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				SceneList sceneList = null;
 				
 				try{
@@ -90,7 +87,6 @@ public class DefineSceneFragment extends Fragment{
 				}catch(FileNotFoundException e){
 					sceneList = new SceneList();
 				}catch(Exception e){
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -113,7 +109,6 @@ public class DefineSceneFragment extends Fragment{
 						os.close();
 						toastMessage("Saved!");
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						toastMessage("Not saved!");
 					}
@@ -152,36 +147,10 @@ public class DefineSceneFragment extends Fragment{
 		        }
 		    }
 		});
-		
-		/*
-		SceneList sceneList = null;
-		
-		try{
-			FileInputStream fis = getActivity().openFileInput(fileName);
-			ObjectInputStream is = new ObjectInputStream(fis);
-			sceneList = (SceneList) is.readObject();
-			is.close();
-		}catch(FileNotFoundException e){
-			toastMessage("File not found!");
-		}catch(Exception e){
-			toastMessage("Unknown error!");
-			e.printStackTrace();
-		}
-		
-		Scene[]scenes = (Scene[]) sceneList.getScenes().toArray(new Scene[sceneList.getScenes().size()]);
-		if(scenes != null){
-			setAdapter(new ArrayAdapter<Scene>(getActivity(), android.R.layout.simple_list_item_1, scenes));
-		}*/
-		
-		/*FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.sceneList, (Fragment) getFragmentManager().findFragmentById(R.id.alarmList_layout));
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();*/
 	}
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 	}
 	

@@ -30,7 +30,6 @@ public class ColorWheelDialog extends DialogFragment {
 
 		@Override
 		public void onStartTrackingTouch(ColourWheel colourWheel) {
-			// TODO Auto-generated method stub
 			
 		}
 
@@ -50,7 +49,7 @@ public class ColorWheelDialog extends DialogFragment {
 	
 	ColourWheel seekbar2;
 	
-	private static final String TAG = ColourWheelActivity.class.getSimpleName();
+	private static final String TAG = "com.example.smarthome";
 	public static String RGB_COLORS = "rgb_colors";
 	private static int red;
 	private static int green;

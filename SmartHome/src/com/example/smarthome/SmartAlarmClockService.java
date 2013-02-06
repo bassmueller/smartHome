@@ -2,12 +2,8 @@ package com.example.smarthome;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Binder;
@@ -15,9 +11,9 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+@SuppressLint("HandlerLeak")
 public class SmartAlarmClockService extends Service {
     // Debugging
  	private static final String TAG = SmartAlarmClockService.class.getSimpleName();
@@ -140,7 +136,7 @@ public class SmartAlarmClockService extends Service {
 	}
     
     // The Handler that gets information back from the SmartConnectionService
-    private final Handler mHandlerBT = new Handler() {
+	private final Handler mHandlerBT = new Handler() {
 		@SuppressLint("NewApi")
 		@Override
         public void handleMessage(Message msg) {        	

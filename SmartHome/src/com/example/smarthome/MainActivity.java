@@ -5,7 +5,6 @@ import java.io.ObjectOutputStream;
 import java.util.Calendar;
 
 import com.example.smarthome.ColorWheelDialog.ColorWheelDialogListener;
-import com.example.smarthome.ColourWheel.OnColourWheelChangeListener;
 import com.example.smarthome.SmartAlarmClockService.SmartAlarmClockBinder;
 
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.telephony.CellLocation;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +27,6 @@ public class MainActivity extends Activity implements AlarmChangeDialog.AlarmCha
 	public static final String TAG = "com.exampe.smarthome";
 	private static final int REQUEST_ENABLE_BT = 1;
 	private static final int REQUEST_CONNECT_BT_DEVICE = 2;
-	private static final int REQUEST_RGB_COLORS = 3;
 	public static final String EXTRA_BT_REMOTE_ADDRESS = "bt_remote_address";
 	public static String rgbLED = "000255000";
 	final String fileNameScene = "Scenes";

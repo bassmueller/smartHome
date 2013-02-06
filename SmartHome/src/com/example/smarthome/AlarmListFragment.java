@@ -13,6 +13,12 @@ public class AlarmListFragment extends ListFragment{
 	private final String fileNameAlarm = "AlarmTimes";
 	
 	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.alarmlist_layout, container, false);
+	}
+	
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
@@ -23,12 +29,6 @@ public class AlarmListFragment extends ListFragment{
 		}else{
 			//setEmptyText("No alarms saved!");
 		}
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.alarmlist_layout, container, false);
 	}
 	
 	@Override
