@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -28,10 +29,6 @@ public class SmartAlarmClockService extends Service {
     public static final int MESSAGE_DEVICE_NAME = 4;
     public static final int MESSAGE_TOAST = 5;	
     
-    // Intent request codes
-    private static final int REQUEST_CONNECT_DEVICE = 1;
-    private static final int REQUEST_ENABLE_BT = 2;
-    
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
@@ -39,10 +36,9 @@ public class SmartAlarmClockService extends Service {
     // Binder given to clients for binding (really? -.-)
     private final IBinder mBinder = new SmartAlarmClockBinder();
     // indicates behavior if the service is killed
-    private int mStartMode;       
+    private boolean mStartMode;       
     // indicates whether onRebind should be used
     private boolean mAllowRebind; 
-    private boolean mEnablingBT = false;
     // Represents the MAC-Address
     private String mRemoteAddress = null;
     private BluetoothAdapter mBluetoothAdapter = null;
@@ -62,9 +58,8 @@ public class SmartAlarmClockService extends Service {
 			return; // TODO Richtig beenden!
 		}
 		
-		mConnectionService = new SmartConnectionService(this, mHandlerBT); // Get the getFactory ...
-		
-		mEnablingBT = false;
+		mConnectionService = new SmartConnectionService(this, mHandlerBT);
+
     }
     
     @Override
@@ -72,36 +67,44 @@ public class SmartAlarmClockService extends Service {
     	// The service is starting, due to a call to startService()
     	if(D) Log.d(TAG, new Exception().getStackTrace()[0].getMethodName() + " called");
     	
-    	if (!mEnablingBT) { // If we are turning on the BT we cannot check if it's enable
-		    if ( (mBluetoothAdapter != null)  && (!mBluetoothAdapter.isEnabled()) ) {
-			
-		    	finishDialogNoBluetooth(); 
-		    }		
-		
-		    if (mConnectionService != null) {
-		    	// Only if the state is STATE_NONE, do we know that we haven't started already
-		    	//TODO Interface me
-		    	if (mConnectionService.getState() == SmartConnectionService.STATE_NONE) {
-		    		// Start the connection
-		    		mConnectionService.start();
-		    	}
-		    }
 
-		    if (mBluetoothAdapter != null) {
-		    	//OK let's do it
-		    	mRemoteAddress = intent.getExtras().getString((ISmartConnectionService.EXTRA_BT_REMOTE_ADDRESS));
-				if (mRemoteAddress != null) {
-					mConnectionService.connect(mBluetoothAdapter.getRemoteDevice(mRemoteAddress));
-				}
-		    }
-		}
-        return mBinder;
+	    if ( (mBluetoothAdapter != null)  && (!mBluetoothAdapter.isEnabled()) ) {
+		
+	    	finishDialogNoBluetooth(); 
+	    }		
+	
+	    if (mConnectionService != null) {
+	    	// Only if the state is STATE_NONE, do we know that we haven't started already
+	    	//TODO Interface me
+	    	if (mConnectionService.getState() == SmartConnectionService.STATE_NONE) {
+	    		// Start the connection
+	    		mConnectionService.start();
+	    	}
+	    }
+
+	    if (mBluetoothAdapter != null) {
+	    	//OK let's do it
+	    	mRemoteAddress = intent.getExtras().getString((MainActivity.EXTRA_BT_REMOTE_ADDRESS));
+			if (mRemoteAddress != null) {
+				mConnectionService.connect(mBluetoothAdapter.getRemoteDevice(mRemoteAddress));
+			}
+	    }
+	    mStartMode = true;
+	    
+	    return mBinder;
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
         // All clients have unbound with unbindService()
     	if(D) Log.d(TAG, new Exception().getStackTrace()[0].getMethodName() + " called");
+    	if (mConnectionService != null) {
+	    	// Only if the state is STATE_NONE, do we know that we haven't started already
+	    	if (mConnectionService.getState() == SmartConnectionService.STATE_CONNECTED) {
+	    		// Stop the connection
+	    		mConnectionService.stop();
+	    	}
+	    }
         return mAllowRebind;
     }
     
@@ -111,29 +114,25 @@ public class SmartAlarmClockService extends Service {
 		if (D)
 			Log.d(TAG, new Exception().getStackTrace()[0].getMethodName()
 					+ " called");
-		// after onUnbind() has already been called
-		if (mConnectionService != null) {
-			// Only if the state is STATE_NONE, do we know that we haven't
-			// started already
-			// TODO Interface me
-			if (mConnectionService.getState() == SmartConnectionService.STATE_NONE) {
-				// Start the connection
-				mConnectionService.start();
-			}
-		}
 	}
     
     @Override
     public void onDestroy() {
         // The service is no longer used and is being destroyed
     	if(D) Log.d(TAG, new Exception().getStackTrace()[0].getMethodName() + " called");
-    	if (mConnectionService != null)
-    		mConnectionService.stop();
+    	// Stop the connection in order you get no information back .. If not happened at unbind
+    	if (mConnectionService != null) {
+    		if (mConnectionService.getState() == SmartConnectionService.STATE_CONNECTED) {
+	    		// Stop the connection
+	    		mConnectionService.stop();
+	    	}
+    	}
+    	mStartMode = false;
     }
     
 	public void write(String message) {
     	if(D) Log.d(TAG, new Exception().getStackTrace()[0].getMethodName() + " called");
-		mConnectionService.write(message);
+		if(mStartMode) mConnectionService.write(message);
 	}
     
     // The Handler that gets information back from the SmartConnectionService
@@ -164,26 +163,35 @@ public class SmartAlarmClockService extends Service {
             case MESSAGE_READ: {
             	byte[] readBuf = (byte[]) msg.obj;
             	StringBuilder sb = new StringBuilder();
-        		NotificationManager notificationManager;
-        		Notification notification;
                 String strIncom = new String(readBuf, 0, msg.arg1);                 
-                sb.append(strIncom);                                                
+                sb.append(strIncom);
+                Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
                 int endOfLineIndex = sb.indexOf("\r\n");                            
                 if (endOfLineIndex > 0) {                                           
                     String sbMsg = sb.substring(0, endOfLineIndex);               
-                    sb.delete(0, sb.length());                                      
-                    notification = new Notification.Builder(SmartAlarmClockService.this)
-                    .setContentTitle("Temperature changed: ")
-                    .setContentText(sbMsg).build();
-                notificationManager = (NotificationManager) SmartAlarmClockService.this.getSystemService(NOTIFICATION_SERVICE);
-                // Hide the notification after its selected
-                notification.flags |= Notification.FLAG_AUTO_CANCEL;
-                notificationManager.notify(0, notification);
+                    sb.delete(0, sb.length());
+//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                	PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, 0);
+//                    NotificationManager notificationManager =
+//                    	    (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//                    	Notification noti = new Notification.Builder(getApplicationContext())
+//                    	.setContentTitle("Smart Alarm Clock")
+//                        .setContentText(sbMsg)
+//                        .setContentIntent(pIntent)
+//                        .build();
+//
+//                    	noti.flags |= Notification.FLAG_AUTO_CANCEL;
+//                    	notificationManager.notify(0, noti);
+                    	Toast.makeText(getApplicationContext(), sbMsg,
+                                Toast.LENGTH_SHORT).show();
                 }
-                Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
+               
             	
             }
                 break;
+            case MESSAGE_TOAST:
+                Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
+                               Toast.LENGTH_SHORT).show();
      
             }
         }

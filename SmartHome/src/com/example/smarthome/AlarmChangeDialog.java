@@ -121,19 +121,15 @@ public class AlarmChangeDialog extends DialogFragment {
 		            	   alarmToChange.setDescription(description.getText().toString());
 		            	   TimePicker time = (TimePicker)getDialog().findViewById(R.id.alarmChangeTimePicker);
 		            	   DatePicker date = (DatePicker) getDialog().findViewById(R.id.alarmChangeDatePicker);
-		            	   service.write(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
-		            	   service.write(String.format("D%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
-		            	   alarmToChange.setTime(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
-		            	   alarmToChange.setDate(String.format("D%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
+		            	   alarmToChange.setTime(String.format("%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
+		            	   alarmToChange.setDate(String.format("%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
 		            	   Spinner spinner = (Spinner) getDialog().findViewById(R.id.sceneChangeSpinner);
 		            	   alarmToChange.setScene((Scene)spinner.getSelectedItem());
-		            	   
-		            	   //Alarm On
-		            	   service.write("a++a");
-		            	   //RGB On
-		            	   service.write("La");
-		            	   
 		            	   InstanceSave.changeItem(fileNameAlarm, alarmToChange, getArguments().getInt("position"), getActivity());
+		            	   
+		            	   list = InstanceSave.readList(fileNameAlarm, getActivity());
+		            	   InstanceSave.sendAlarmTime(service, list.getEntireList().get(list.getEntireList().size()-1), getActivity());		            	   
+		            	   
 	            	   }else{
 	            		   MainActivity.toastMessage("Object to change not found!", getActivity());
 	            	   }

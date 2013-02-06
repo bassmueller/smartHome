@@ -20,11 +20,8 @@
  */
  package com.example.smarthome;
 
-import java.util.Arrays;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.SeekBar;

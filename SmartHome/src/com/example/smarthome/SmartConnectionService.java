@@ -26,7 +26,7 @@ public class SmartConnectionService implements ISmartConnectionService{
   	private static final UUID SMART_ALARM_CLOCK_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // Member fields
-    private final BluetoothAdapter mAdapter;
+    private final BluetoothAdapter mBluetoothAdapter;
     private final Handler mHandler;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
@@ -45,7 +45,7 @@ public class SmartConnectionService implements ISmartConnectionService{
      * @param handler  A Handler to send messages back to the UI Activity
      */
     public SmartConnectionService(Context context, Handler handler) {
-        mAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
         mHandler = handler;
     }
@@ -207,6 +207,25 @@ public class SmartConnectionService implements ISmartConnectionService{
         msg.setData(bundle);
         mHandler.sendMessage(msg);
     }
+    
+    /**
+     * Checks if Bluetooth is supported on the current device or not
+     * @return Current device Bluetooth-Support-Status
+     */
+    public boolean checkBTState() {
+		// Check for Bluetooth support and then check to make sure it is turned on
+		if (mBluetoothAdapter == null) {
+			Log.e(TAG, "Bluetooth not support");
+			return false;
+		} else {
+			if (mBluetoothAdapter.isEnabled()) {
+				Log.d(TAG, "...Bluetooth ON...");
+			} else {
+				Log.d(TAG, "...Bluetooth OFF..."); // Turn on Bluetooth
+			}
+			return true;
+		}
+	}
 
     /**
      * This thread runs while attempting to make an outgoing connection
@@ -225,6 +244,7 @@ public class SmartConnectionService implements ISmartConnectionService{
             // Get a BluetoothSocket for a connection with the
             // given BluetoothDevice
             try {
+            	// Insecure connection - man in the middle attack possible!
                 tmpInsecure = device.createInsecureRfcommSocketToServiceRecord(SMART_ALARM_CLOCK_UUID);
             } catch (IOException e) {
                 Log.e(TAG, "create() failed", e);
@@ -236,8 +256,9 @@ public class SmartConnectionService implements ISmartConnectionService{
             Log.i(TAG, "BEGIN mConnectThread");
             setName("ConnectThread");
 
-            // Always cancel discovery because it will slow down a connection
-            mAdapter.cancelDiscovery();
+            // Make sure always cancel discovery because it will slow down a connection 
+            // We should do this after choosing a device
+            mBluetoothAdapter.cancelDiscovery();
 
             // Make a connection to the BluetoothSocket
             try {

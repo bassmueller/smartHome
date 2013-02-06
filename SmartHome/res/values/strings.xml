@@ -12,7 +12,11 @@
     <string name="sceneDescriptionField">scene name</string>
     <string name="sceneLightshow">Wake-Up lightshow</string>
     <string name="sceneAudio">Sound-effects</string>
+    <string name="sceneToggleTestLEDon">test selected color</string>
+    <string name="sceneToggleTestLEDoff">stop testing color</string>
     <string name="sceneSave">save scene</string>
+    <string name="sceneColorWheel">select color</string>
+    <string name="changeColor">set color</string>
     <string name="alarmChange">save changes</string>
     <string name="cancel">cancel</string>
     

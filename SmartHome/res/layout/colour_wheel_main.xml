@@ -28,6 +28,6 @@
     android:layout_height="wrap_content" 
     android:text="@string/hello"
     />
-<com.onesixthree.android.smartalarmclock2.app.ColourWheel android:layout_height="wrap_content" android:id="@+id/seekBar1" android:layout_width="match_parent" />
+<com.example.smarthome.ColourWheel android:layout_height="wrap_content" android:id="@+id/seekBar1" android:layout_width="match_parent" />
 
 </LinearLayout>

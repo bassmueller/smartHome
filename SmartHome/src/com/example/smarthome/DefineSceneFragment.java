@@ -7,10 +7,9 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-
-
+import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +20,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class DefineSceneFragment extends Fragment{
 	
@@ -38,6 +38,14 @@ public class DefineSceneFragment extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		
 		final String fileName = "Scenes";
+		
+		Button button = (Button) getActivity().findViewById(R.id.sceneButtonColorWheel);
+		button.setOnClickListener(new View.OnClickListener() {
+		    public void onClick(View v) {
+				DialogFragment newFragment = new ColorWheelDialog();
+			    newFragment.show(getFragmentManager(), "colorWheelDialog");
+		    }
+		});
 		
 		Switch isLightShowSwitch = (Switch)getActivity().findViewById(R.id.lightShow);
 		isLightShowSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -92,6 +100,7 @@ public class DefineSceneFragment extends Fragment{
 					currentSelection.setDescription(description.getText().toString());
 					currentSelection.setLightShow(isLightShow);
 					currentSelection.setSoundEffects(isSoundEffects);
+					currentSelection.setRgbLED(MainActivity.rgbLED);
 					
 					sceneList.addItem(currentSelection);
 					
@@ -112,6 +121,36 @@ public class DefineSceneFragment extends Fragment{
 					toastMessage("Not saved!");
 				}
 			}
+		});
+		
+		ToggleButton toggle = (ToggleButton) getActivity().findViewById(R.id.togglebuttonTestLED);
+		toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		    	SmartAlarmClockService service = null;
+				if(getActivity() instanceof MainActivity){
+					service =((MainActivity)getActivity()).mSACService;
+				}else if(getActivity() instanceof DetailsActivity){
+					service = ((DetailsActivity)getActivity()).mSACService;
+				}
+				
+		    	if (isChecked && (service != null)) {
+		    		String rgbColor = null;
+		    		if(getActivity() instanceof MainActivity){
+						rgbColor = MainActivity.rgbLED;
+					}else if(getActivity() instanceof DetailsActivity){
+						rgbColor = DetailsActivity.rgbLED;
+					}
+		    		service.write("Cu" + rgbColor +"/");
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+		    		service.write("La/");
+		        } else {
+		        	service.write("Lo/");
+		        }
+		    }
 		});
 		
 		/*

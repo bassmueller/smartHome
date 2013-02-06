@@ -40,10 +40,18 @@ public class InstanceSave {
 		return (list!=null)?list.getEntireList().get(location):null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	static synchronized public <T extends Serializable> T deleteSpecificObject(String fileName, int location, Activity context){
 		IStoredList<T> list = readList(fileName, context);
 		T objectDeleted = (list!=null)?list.getEntireList().remove(location):null;
 		if(objectDeleted != null){
+			if((list.getEntireList().size() > 1)){
+				if(objectDeleted instanceof AlarmTime){
+					sortElements((List<AlarmTime>)list.getEntireList());
+				}
+			}else if(list.getEntireList().size() == 1){
+				((AlarmTime)list.getEntireList().get(0)).setActive(true);
+			}
 			FileOutputStream fos;
 			ObjectOutputStream os;
 			try {
@@ -55,7 +63,9 @@ public class InstanceSave {
 				e.printStackTrace();	
 			}
 		}
+		
 		updateAlarmListFragment(context);
+
 		return objectDeleted;
 	}
 	
@@ -84,15 +94,16 @@ public class InstanceSave {
 		
 		if(list != null){
 			list.addItem(objectToAppend);
-			if(objectToAppend instanceof AlarmTime){
-				Collections.sort((List<AlarmTime>)list.getEntireList(), new AlarmTimeComparator());
+			//if(objectToAppend instanceof AlarmTime){
+				/*Collections.sort((List<AlarmTime>)list.getEntireList(), new AlarmTimeComparator());
 				for(int i = 0; i < list.getEntireList().size(); i++){
 					AlarmTime alarmTime = (AlarmTime) list.getEntireList().get(i);
 					alarmTime.setActive(false);
 				}
 				AlarmTime firstAlarmTime = (AlarmTime) list.getEntireList().get(0);
-				firstAlarmTime.setActive(true);
-			}
+				firstAlarmTime.setActive(true);*/
+				sortElements((List<AlarmTime>)list.getEntireList());
+			//}
 			
 			FileOutputStream fos;
 			ObjectOutputStream os;
@@ -118,7 +129,14 @@ public class InstanceSave {
 		if(list != null){
 			try{
 				list.getEntireList().set(location, objectToSave);
-				Collections.sort((List<AlarmTime>)list.getEntireList(), new AlarmTimeComparator());
+				/*Collections.sort((List<AlarmTime>)list.getEntireList(), new AlarmTimeComparator());
+				for(int i = 0; i < list.getEntireList().size(); i++){
+					AlarmTime alarmTime = (AlarmTime) list.getEntireList().get(i);
+					alarmTime.setActive(false);
+				}
+				AlarmTime firstAlarmTime = (AlarmTime) list.getEntireList().get(0);
+				firstAlarmTime.setActive(true);*/
+				sortElements((List<AlarmTime>)list.getEntireList());
 			}catch(Exception e){
 				e.printStackTrace();
 			}
@@ -151,6 +169,49 @@ public class InstanceSave {
 		ft.replace(id, new AlarmListFragment());
 	    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 	    ft.commit();
+	}
+	
+	static synchronized public void sendAlarmTime(SmartAlarmClockService service, AlarmTime nextAlarm, Activity context){
+	   if(service != null){
+		   service.write("a--a/");
+		   try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		   service.write("D" + nextAlarm.getDate()+"/");
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			service.write("A"+ nextAlarm.getTime()+"/");
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			service.write("Cu" + nextAlarm.getScene().getRgbLED()+"/");
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			//Alarm On
+			service.write("a++a"+"/");
+	   }else{
+		   Toast.makeText(context, "write-operation to Arduino failed!", Toast.LENGTH_SHORT).show();
+	   }
+	}
+	
+	static synchronized public void sortElements(List<AlarmTime> list){
+		Collections.sort(list, new AlarmTimeComparator());
+		for(int i = 0; i < list.size(); i++){
+			AlarmTime alarmTime = (AlarmTime) list.get(i);
+			alarmTime.setActive(false);
+		}
+		AlarmTime firstAlarmTime = (AlarmTime) list.get(list.size()-1);
+		firstAlarmTime.setActive(true);
 	}
 
 }

@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.SlidingDrawer;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
@@ -43,20 +44,14 @@ public class AlarmClockFragment extends Fragment{
 
 				TimePicker time = (TimePicker)getActivity().findViewById(R.id.alarmTimePicker);
 				DatePicker date = (DatePicker) getActivity().findViewById(R.id.alarmDatePicker);
-				currentSelection.setTime(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
-				currentSelection.setDate(String.format("D%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
-				//service.write(String.format("D%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
-				//service.write(String.format("A%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
+				currentSelection.setTime(String.format("%02d:%02d", time.getCurrentHour(), time.getCurrentMinute()));
+				currentSelection.setDate(String.format("%02d.%02d.%04d", date.getDayOfMonth(), (date.getMonth()+1), date.getYear()));
 				Spinner spinner = (Spinner)getActivity().findViewById(R.id.sceneSpinner);
 				currentSelection.setScene((Scene)spinner.getSelectedItem());
-				
-				//Alarm On
-				//service.write("a++a");
-				//RGB On
-				service.write("Cu123123123");
-				service.write("La");
-
 				InstanceSave.appendToList(fileNameAlarm, currentSelection, getActivity());
+				
+				IStoredList<AlarmTime> list = InstanceSave.readList(fileNameAlarm, getActivity());
+         	   	InstanceSave.sendAlarmTime(service, list.getEntireList().get(list.getEntireList().size()-1), getActivity());	
 			}
 		});
 		

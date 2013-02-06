@@ -1,5 +1,10 @@
 package com.example.smarthome;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+
+import com.example.smarthome.ColorWheelDialog.ColorWheelDialogListener;
+import com.example.smarthome.ColourWheel.OnColourWheelChangeListener;
 import com.example.smarthome.SmartAlarmClockService.SmartAlarmClockBinder;
 
 import android.os.Bundle;
@@ -16,7 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements AlarmChangeDialog.AlarmChangeDialogListener{
+public class MainActivity extends Activity implements AlarmChangeDialog.AlarmChangeDialogListener, ColorWheelDialogListener{
 	
     private static final boolean D = true;
 	public static final String TAG = "com.exampe.smarthome";
@@ -24,17 +29,34 @@ public class MainActivity extends Activity implements AlarmChangeDialog.AlarmCha
 	private static final int REQUEST_CONNECT_BT_DEVICE = 2;
 	private static final int REQUEST_RGB_COLORS = 3;
 	public static final String EXTRA_BT_REMOTE_ADDRESS = "bt_remote_address";
+	public static String rgbLED = "000255000";
+	final String fileNameScene = "Scenes";
 	
     SmartAlarmClockService mSACService = null;
     private BluetoothAdapter mBluetoothAdapter = null;
     boolean mBound = false;
+    boolean clearSceneList = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_layout);
 		
-		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();	
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if(clearSceneList){
+			try {
+				FileOutputStream fos = openFileOutput(fileNameScene, Context.MODE_PRIVATE);
+				ObjectOutputStream os = new ObjectOutputStream(fos);
+				os.writeObject(new SceneList());
+				os.close();
+				Toast.makeText(getApplicationContext(), "SceneList cleared!", Toast.LENGTH_SHORT).show();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				Toast.makeText(getApplicationContext(), "Error! Cleaning SceneList failed!", Toast.LENGTH_SHORT).show();
+			}
+		}
+		
 	}
 	
 	@Override
@@ -165,6 +187,18 @@ public class MainActivity extends Activity implements AlarmChangeDialog.AlarmCha
 			}
 			return true;
 		}
+	}
+
+	@Override
+	public void onDialogPositiveClickCW(DialogFragment dailog) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDialogNegativeClickCW(DialogFragment dailog) {
+		// TODO Auto-generated method stub
+		
 	}
     
 

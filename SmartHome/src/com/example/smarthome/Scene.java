@@ -9,6 +9,7 @@ public class Scene implements Serializable {
 	private String description;
 	private boolean lightShow;
 	private boolean soundEffects;
+	private String rgbLED;
 	
 	public String getDescription() {
 		return description;
@@ -34,6 +35,12 @@ public class Scene implements Serializable {
 	@Override
 	public String toString() {
 		return ("Scene " + this.description);
+	}
+	public String getRgbLED() {
+		return rgbLED;
+	}
+	public void setRgbLED(String rgbLED) {
+		this.rgbLED = rgbLED;
 	}
 
 }

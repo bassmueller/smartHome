@@ -1,6 +1,7 @@
 package com.example.smarthome;
 
 import com.example.smarthome.AlarmChangeDialog.AlarmChangeDialogListener;
+import com.example.smarthome.ColorWheelDialog.ColorWheelDialogListener;
 import com.example.smarthome.SmartAlarmClockService.SmartAlarmClockBinder;
 
 import android.app.Activity;
@@ -15,7 +16,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-public class DetailsActivity extends Activity implements AlarmChangeDialogListener{
+public class DetailsActivity extends Activity implements AlarmChangeDialogListener, ColorWheelDialogListener{
 	// Debugging
 	private static final String TAG = MainActivity.class.getSimpleName();
     private static final boolean D = true;
@@ -24,6 +25,7 @@ public class DetailsActivity extends Activity implements AlarmChangeDialogListen
 	private static final int REQUEST_CONNECT_BT_DEVICE = 2;
 	private static final int REQUEST_RGB_COLORS = 3;
 	public static final String EXTRA_BT_REMOTE_ADDRESS = "bt_remote_address";
+	public static String rgbLED = "000255000";
 	
     SmartAlarmClockService mSACService = null;
     boolean mBound = false;
@@ -131,5 +133,17 @@ public class DetailsActivity extends Activity implements AlarmChangeDialogListen
 	        mBound = false;
 	    }
 	};
+
+	@Override
+	public void onDialogPositiveClickCW(DialogFragment dailog) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDialogNegativeClickCW(DialogFragment dailog) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
