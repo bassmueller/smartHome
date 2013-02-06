@@ -4,6 +4,9 @@
     <string name="app_name">SmartHome</string>
     <string name="menu_connect">connect</string>
     <string name="menu_disconnect">disconnect</string>
+    <string name="menu_alarmOff">Stop Alarm</string>
+    <string name="menu_temperature">Temperature</string>
+    <string name="menu_light">Light off</string>
     <string name="close_App_Button">Close</string>
     <string name="alarmDefaultDescription">Description</string>
     <string name="alarmSave">Save</string>

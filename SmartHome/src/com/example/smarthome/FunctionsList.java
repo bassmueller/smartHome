@@ -9,7 +9,6 @@ public final class FunctionsList {
             "Alarm Clock",   
             "View saved wake-up times",
             "Define wake-up settings",
-            "stop running wake-up scene"
     };
     
 }

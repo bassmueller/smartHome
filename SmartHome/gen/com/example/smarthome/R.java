@@ -16,8 +16,11 @@ public final class R {
     public static final class drawable {
         public static final int alarmclock_off=0x7f020000;
         public static final int alarmclock_on=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int ic_test=0x7f020003;
+        public static final int alarmclock_shutdown=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int ic_test=0x7f020004;
+        public static final int light=0x7f020005;
+        public static final int temperature=0x7f020006;
     }
     public static final class id {
         public static final int activate_BT_Button=0x7f080001;
@@ -47,6 +50,9 @@ public final class R {
         public static final int functionList=0x7f080024;
         public static final int imageItem=0x7f080026;
         public static final int lightShow=0x7f080017;
+        public static final int menu_buttonAlarmOff=0x7f08002a;
+        public static final int menu_buttonLight=0x7f08002c;
+        public static final int menu_buttonTemperature=0x7f08002b;
         public static final int menu_connect=0x7f080028;
         public static final int menu_disconnect=0x7f080029;
         public static final int new_devices=0x7f080021;
@@ -79,50 +85,53 @@ public final class R {
         public static final int activity_main=0x7f070000;
     }
     public static final class string {
-        public static final int alarmChange=0x7f040010;
-        public static final int alarmDefaultDescription=0x7f040004;
-        public static final int alarmSave=0x7f040005;
-        public static final int alert_dialog_no=0x7f040014;
+        public static final int alarmChange=0x7f040013;
+        public static final int alarmDefaultDescription=0x7f040007;
+        public static final int alarmSave=0x7f040008;
+        public static final int alert_dialog_no=0x7f040017;
         /**  AlertDialog 
          */
-        public static final int alert_dialog_no_bt=0x7f040012;
-        public static final int alert_dialog_ok=0x7f040016;
-        public static final int alert_dialog_turn_on_bt=0x7f040017;
-        public static final int alert_dialog_warning_title=0x7f040015;
-        public static final int alert_dialog_yes=0x7f040013;
+        public static final int alert_dialog_no_bt=0x7f040015;
+        public static final int alert_dialog_ok=0x7f040019;
+        public static final int alert_dialog_turn_on_bt=0x7f04001a;
+        public static final int alert_dialog_warning_title=0x7f040018;
+        public static final int alert_dialog_yes=0x7f040016;
         public static final int app_name=0x7f040000;
         /**   MainActivityTesting 
          */
-        public static final int bluetooth_devicelist=0x7f040020;
-        public static final int bluetooth_open=0x7f040018;
-        public static final int button_scan=0x7f04001f;
-        public static final int cancel=0x7f040011;
-        public static final int changeColor=0x7f04000f;
-        public static final int close_App_Button=0x7f040003;
-        public static final int color_wheel_activity_button=0x7f040021;
-        public static final int connect_button=0x7f040024;
-        public static final int disconnect_button=0x7f040025;
-        public static final int hello=0x7f040022;
+        public static final int bluetooth_devicelist=0x7f040023;
+        public static final int bluetooth_open=0x7f04001b;
+        public static final int button_scan=0x7f040022;
+        public static final int cancel=0x7f040014;
+        public static final int changeColor=0x7f040012;
+        public static final int close_App_Button=0x7f040006;
+        public static final int color_wheel_activity_button=0x7f040024;
+        public static final int connect_button=0x7f040027;
+        public static final int disconnect_button=0x7f040028;
+        public static final int hello=0x7f040025;
+        public static final int menu_alarmOff=0x7f040003;
         public static final int menu_connect=0x7f040001;
         public static final int menu_disconnect=0x7f040002;
-        public static final int none_found=0x7f04001c;
-        public static final int none_paired=0x7f04001b;
+        public static final int menu_light=0x7f040005;
+        public static final int menu_temperature=0x7f040004;
+        public static final int none_found=0x7f04001f;
+        public static final int none_paired=0x7f04001e;
         /**   DeviceListActivity 
          */
-        public static final int scanning=0x7f040019;
-        public static final int sceneAudio=0x7f04000a;
-        public static final int sceneColorWheel=0x7f04000e;
-        public static final int sceneDescriptionField=0x7f040008;
-        public static final int sceneLightshow=0x7f040009;
-        public static final int sceneSave=0x7f04000d;
-        public static final int sceneToggleTestLEDoff=0x7f04000c;
-        public static final int sceneToggleTestLEDon=0x7f04000b;
-        public static final int select_device=0x7f04001a;
-        public static final int send_character_button=0x7f040023;
-        public static final int testIconDescription=0x7f040006;
-        public static final int titleOptionsDialog=0x7f040007;
-        public static final int title_other_devices=0x7f04001e;
-        public static final int title_paired_devices=0x7f04001d;
+        public static final int scanning=0x7f04001c;
+        public static final int sceneAudio=0x7f04000d;
+        public static final int sceneColorWheel=0x7f040011;
+        public static final int sceneDescriptionField=0x7f04000b;
+        public static final int sceneLightshow=0x7f04000c;
+        public static final int sceneSave=0x7f040010;
+        public static final int sceneToggleTestLEDoff=0x7f04000f;
+        public static final int sceneToggleTestLEDon=0x7f04000e;
+        public static final int select_device=0x7f04001d;
+        public static final int send_character_button=0x7f040026;
+        public static final int testIconDescription=0x7f040009;
+        public static final int titleOptionsDialog=0x7f04000a;
+        public static final int title_other_devices=0x7f040021;
+        public static final int title_paired_devices=0x7f040020;
     }
     public static final class style {
         /** 

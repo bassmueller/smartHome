@@ -57,7 +57,7 @@ public class FunctionsFragment extends ListFragment{
      * whole new activity in which it is displayed.
      */
     void showDetails(int index) {
-    	if (dual && index != 3) {
+    	if (dual) {
             // We can display everything in-place with fragments, so update
             // the list to highlight the selected item and show the data.
             getListView().setItemChecked(index, true);
@@ -96,17 +96,6 @@ public class FunctionsFragment extends ListFragment{
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
             }
-
-        }else if(index == 3){
-        	SmartAlarmClockService service = null;
-			if(getActivity() instanceof MainActivity){
-				service =((MainActivity)getActivity()).mSACService;
-			}else if(getActivity() instanceof DetailsActivity){
-				service = ((DetailsActivity)getActivity()).mSACService;
-			}
-			if(service != null){
-				service.write("a--a");
-			}
         }else {
             // Otherwise we need to launch a new activity to display
             // the dialog fragment with selected text.

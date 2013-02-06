@@ -2,6 +2,7 @@ package com.example.smarthome;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.util.Calendar;
 
 import com.example.smarthome.ColorWheelDialog.ColorWheelDialogListener;
 import com.example.smarthome.ColourWheel.OnColourWheelChangeListener;
@@ -16,6 +17,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.telephony.CellLocation;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,6 +77,18 @@ public class MainActivity extends Activity implements AlarmChangeDialog.AlarmCha
 	            mBound = false;
 	        }
             return true;
+        case R.id.menu_buttonAlarmOff:
+			if(mSACService != null){
+				mSACService.write("a--a");
+			}
+        case R.id.menu_buttonTemperature:
+        	if(mSACService != null){
+				mSACService.write("T/");
+			}
+        case R.id.menu_buttonLight:
+        	if(mSACService != null){
+				mSACService.write("Lo/");
+			}
         default:
             return super.onOptionsItemSelected(item);
     }
@@ -163,6 +177,44 @@ public class MainActivity extends Activity implements AlarmChangeDialog.AlarmCha
 					}
 				}
 			}
+			new Thread(new Runnable() {
+				boolean running = true;
+				
+				@Override
+				public void run() {
+					while(running){
+						try {
+							Thread.sleep(250);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						if(mBound){
+							if(mSACService.getConnectionState() == SmartConnectionService.STATE_CONNECTED){
+								running = false;
+								Calendar c = Calendar.getInstance(); 
+								int minute = c.get(Calendar.MINUTE);
+								int hour = c.get(Calendar.HOUR_OF_DAY);
+								mSACService.write(String.format("U%02d:%02d/",hour, minute));
+								int day = c.get(Calendar.DAY_OF_MONTH);
+								int month = c.get(Calendar.MONTH)+1;
+								int year = c.get(Calendar.YEAR);
+								try {
+									Thread.sleep(100);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+								mSACService.write(String.format("D%02d.%02d.%04d/", day, month, year));
+								try {
+									Thread.sleep(100);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+					}
+				}							
+			}).start();
 		} break;
 		
 		default: break;

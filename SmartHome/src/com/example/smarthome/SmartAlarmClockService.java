@@ -55,7 +55,7 @@ public class SmartAlarmClockService extends Service {
 		if (mBluetoothAdapter == null) {
             //No BluetoothDialog
 			finishDialogNoBluetooth();
-			return; // TODO Richtig beenden!
+			return;
 		}
 		
 		mConnectionService = new SmartConnectionService(this, mHandlerBT);
@@ -134,6 +134,10 @@ public class SmartAlarmClockService extends Service {
     	if(D) Log.d(TAG, new Exception().getStackTrace()[0].getMethodName() + " called");
 		if(mStartMode) mConnectionService.write(message);
 	}
+	
+	public int getConnectionState() {
+		return mConnectionService.getState();
+	}
     
     // The Handler that gets information back from the SmartConnectionService
     private final Handler mHandlerBT = new Handler() {
@@ -163,8 +167,10 @@ public class SmartAlarmClockService extends Service {
             case MESSAGE_READ: {
             	byte[] readBuf = (byte[]) msg.obj;
             	StringBuilder sb = new StringBuilder();
-                String strIncom = new String(readBuf, 0, msg.arg1);                 
-                sb.append(strIncom);
+                String strIncom = new String(readBuf, 0, msg.arg1);     
+                if (strIncom.contains("$"))
+                	sb.append(strIncom.substring(strIncom.indexOf('$') + 1, msg.arg1));
+                else sb.append(strIncom);
                 Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
                 int endOfLineIndex = sb.indexOf("\r\n");                            
                 if (endOfLineIndex > 0) {                                           

@@ -173,7 +173,7 @@ public class InstanceSave {
 	
 	static synchronized public void sendAlarmTime(SmartAlarmClockService service, AlarmTime nextAlarm, Activity context){
 	   if(service != null){
-		   service.write("a--a/");
+		   service.write("a--a");
 		   try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
@@ -198,7 +198,7 @@ public class InstanceSave {
 				e.printStackTrace();
 			}
 			//Alarm On
-			service.write("a++a"+"/");
+			service.write("a++a");
 	   }else{
 		   Toast.makeText(context, "write-operation to Arduino failed!", Toast.LENGTH_SHORT).show();
 	   }
